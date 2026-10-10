@@ -1,0 +1,52 @@
+BodyGyro.MaxTorque = Vector3.new(100000, 100000, 100000)
+
+         task.spawn(function()
+            while Flying and task.wait() do
+               local Camera = workspace.CurrentCamera
+               BodyGyro.CFrame = Camera.CFrame
+               BodyVelocity.Velocity = Camera.CFrame.LookVector * FlySpeed
+            end
+            if BodyVelocity then BodyVelocity:Destroy() end
+            if BodyGyro then BodyGyro:Destroy() end
+         end)
+      else
+         if BodyVelocity then BodyVelocity:Destroy() end
+         if BodyGyro then BodyGyro:Destroy() end
+      end
+   end,
+})
+
+-- 7. Invisible (Невидимость)
+MainTab:CreateToggle({
+   Name = "Invisibility (Невидимость)",
+   CurrentValue = false,
+   Flag = "InvisToggle",
+   Callback = function(Value)
+      if Character then
+         for _, part in pairs(Character:GetDescendants()) do
+            if part:IsA("BasePart") or part:IsA("Decal") then
+               part.Transparency = Value and 1 or 0
+            end
+         end
+      end
+   end,
+})
+
+-- 8. Dropkick (Удар в прыжке / Импульс вперед)
+MainTab:CreateButton({
+   Name = "Dropkick (Рывок / Удар)",
+   Callback = function()
+      local RootPart = Character:FindFirstChild("HumanoidRootPart")
+      if RootPart then
+         local ForwardVector = RootPart.CFrame.LookVector
+         RootPart.Velocity = ForwardVector * 150 + Vector3.new(0, 50, 0)
+      end
+   end,
+})
+
+Rayfield:Notify({
+   Title = "мяуHub",
+   Content = "Скрипт успешно загружен и готов к работе!",
+   Duration = 5,
+   Image = 4483362458,
+})
